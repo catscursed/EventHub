@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+/* Фильтрация */
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+/* Закрытие медиа-запроса */
+@media (max-width: 768px) {
+    .filter-form {
+        flex-direction: column;
+    }
+}
+
+/* Пагинация */
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.step-links a {
+    background-color: #f2cc8f; /* Цвет кнопок */
+    color: #ffffff; /* Белый цвет шрифта */
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 0 5px;
+    font-weight: bold;
+}
+
+.step-links a:hover {
+    background-color: #e0b77e; /* Немного темнее при наведении */
+}
+
+.step-links .current {
+    padding: 10px 15px;
+    background-color: #d9d9d9; /* Цвет фона для текущей страницы */
+    color: #333333; /* Цвет шрифта для текущей страницы */
+    border-radius: 5px;
+    margin: 0 5px;
+    font-weight: bold;
+}
+</style>
+
+<section class="hero-section hero-50 d-flex justify-content-center align-items-center" id="section_1">
+    <div class="section-overlay"></div>
+    <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path fill="#3D405B" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z" stroke-width="0"></path>
+    </svg>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <h2 class="text-white mb-4 pb-2">Найти мероприятие</h2>
+                <form method="get" action=".">
+                    <input type="text" name="search" class="form-control" placeholder="Введите название или описание мероприятия">
+                </form>
+                <a href="{% url 'index' %}" class="btn custom-btn smoothscroll me-3">На главную</a>
+            </div>
+        </div>
+    </div>
+
+    <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path fill="#ffffff" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z" stroke-width="0"></path>
+        <path fill="#ffffff" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z" stroke-width="0"></path>
+        <path fill="#ffffff" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z" stroke-width="0"></path>
+        <path fill="#ffffff" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z" stroke-width="0"></path>
+        <path fill="#ffffff" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z" stroke-width="0"></path>
+        <path fill="#ffffff" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z" stroke-width="0"></path>
+        <path fill="#ffffff" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z" stroke-width="0"></path>
+    </svg>
+</section>
+
+<section class="events-section events-listing-section section-bg section-padding" id="section_3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <h2 class="mb-3">Все мероприятия</h2>
+            </div>
+
+            <!--фильтрация-->
+            <form method="get" action="." class="filter-form">
+                <div class="form-group">
+                    <label for="id_price__gt">Цена от:</label>
+                    {{ filter.form.price__gt }}
+                </div>
+                <div class="form-group">
+                    <label for="id_price__lt">Цена до:</label>
+                    {{ filter.form.price__lt }}
+                </div>
+                <div class="form-group">
+                    <label for="id_event_date">Дата:</label>
+                    {{ filter.form.event_date }}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="submit-button">Применить фильтр</button>
+                </div>
+            </form>
+
+            {% if events %}
+                {% for event in page_obj %}
+                    <div class="row custom-block custom-block-bg mb-4">
+                        <div class="col-lg-2 col-md-4 col-12 order-2 order-md-0 order-lg-0">
+                            <div class="custom-block-date-wrap d-flex d-lg-block d-md-block align-items-center mt-3 mt-lg-0 mt-md-0">
+                                <h6 class="custom-block-date mb-lg-1 mb-0 me-3 me-lg-0 me-md-0">{{ event.event_date|date:"j" }}</h6>
+                                <strong class="text-white">{{ event.event_date|date:"M Y" }}</strong>
+                            </div>
+                        </div>
+
+                        <!--логотип мероприятия-->
+                        <div class="col-lg-4 col-md-8 col-12 order-1 order-lg-0">
+                            <div class="custom-block-image-wrap">
+                                <a href="{% url 'event_detail' event.slug %}">
+                                    <img src="{{ event.logo.url }}"
+                                         class="custom-block-image img-fluid custom-logo"
+                                         alt="">
+                                    <i class="custom-block-icon bi-link"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-12 order-3 order-lg-0">
+                            <div class="custom-block-info mt-2 mt-lg-0">
+                                <a href="{% url 'event_detail' event.slug %}" class="events-title mb-3">{{event.title}}</a>
+                                <p class="mb-0">{{event.description|truncatechars:190 }}</p>
+
+                                <div class="d-flex flex-wrap border-top mt-4 pt-3">
+                                    <div class="mb-4 mb-lg-0">
+                                        <div class="d-flex flex-wrap align-items-center mb-1">
+                                            <span class="custom-block-span">Место проведения:</span>
+                                            <p class="mb-0">{{ event.location|truncatechars:40 }}</p>
+                                        </div>
+
+                                        <div class="d-flex flex-wrap align-items-center">
+                                            <span class="custom-block-span" style="margin-right: 5px;">Цена:</span>
+                                            <p class="mb-0" style="margin-left: 0;">{{ event.price|floatformat:0 }} руб.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex align-items-center ms-lg-auto">
+                                        <a href="{% url 'event_detail' event.slug %}" class="btn custom-btn">Купить билет</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h3>Ничего не найдено</h3>
+            {% endif %}
+
+            <!--Пагинация-->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; Первая</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

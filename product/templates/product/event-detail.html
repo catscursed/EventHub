@@ -1,0 +1,401 @@
+{% extends 'base.html' %}
+{% load static%}
+
+
+{% block content %}
+
+<style>
+/* logo settings */
+        .custom-logo {
+    max-width: 300px; /* Максимальная ширина */
+    max-height: 200px; /* Максимальная высота */
+    min-width: 150px; /* Минимальная ширина */
+    min-height: 100px; /* Минимальная высота */
+    object-fit: cover; /* Изображение масштабируется и обрезается, чтобы сохранить пропорции */
+    width: 100%; /* Подстраивается под ширину контейнера */
+    height: auto; /* Поддерживает пропорции при изменении размеров */
+
+}
+/* end logo settings */
+
+/* errors custom */
+    .alert-custom {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050;
+        width: 350px;
+        padding: 20px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        color: white;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        animation: slideIn 0.4s ease-out;
+    }
+
+    .alert-danger {
+        background-color: #ff4d4f; /* Красный для ошибок */
+    }
+
+    .alert-success {
+        background-color: #4caf50; /* Зелёный для успешных сообщений */
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .alert-icon {
+        flex-shrink: 0;
+    }
+
+    .alert-content {
+        flex-grow: 1;
+        font-size: 16px;
+    }
+
+    .btn-close-custom {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 26px;
+        line-height: 1;
+        padding: 0 0 0 10px;
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+    }
+
+    .btn-close-custom:hover {
+        opacity: 1;
+    }
+
+    .btn-close-custom:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .btn-close-custom::before {
+        content: "×";
+        color: white;
+    }
+/* errors custom */
+
+/* Стили для кнопки открытия модального окна */
+.btn-open-modal {
+    background-color: #f2cc8f;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-open-modal:hover {
+    background-color: #e6b87e;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-open-modal:active {
+    background-color: #d9a76e;
+}
+
+/* Стили для модального окна */
+.modal-content {
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+    border: none;
+    background: linear-gradient(135deg, #ffffff, #f0f0f0); /* Мягкий градиент */
+    animation: fadeIn 0.4s ease;
+}
+
+.modal-header {
+    background-color: #ffffff; /* Белый фон заголовка */
+    color: #333; /* Темный цвет текста */
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 16px;
+}
+
+.modal-body {
+    padding: 24px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f7f7f7; /* Легкий серый для модального тела */
+}
+
+.modal-footer {
+    background-color: #e7f4f8; /* Светлый бирюзовый оттенок */
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Стили для кнопок в модальном окне */
+.btn-close-modal {
+    background-color: #888;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-close-modal:hover {
+    background-color: #666;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-buy-ticket {
+    background-color: #f2cc8f; /* Основной цвет кнопки */
+    color: #333; /* Цвет текста */
+    padding: 10px 20px; /* Внутренний отступ для кнопки */
+    border-radius: 8px; /* Округлые края */
+    border: none; /* Убираем обводку */
+    font-size: 16px; /* Размер текста */
+    font-weight: bold; /* Жирный текст */
+    cursor: pointer; /* Курсор при наведении */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Плавный переход для фона и тени */
+    display: inline-block; /* Убираем возможные сбои в размерах */
+    text-align: center; /* Центрируем текст */
+    min-width: 150px; /* Минимальная ширина для стабильной формы */
+}
+
+.btn-buy-ticket:hover {
+    background-color: #e6b87e; /* Более тёмный оттенок при наведении */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Добавляем тень */
+}
+
+.btn-buy-ticket:active {
+    background-color: #d9a76e; /* Ещё более тёмный оттенок при клике */
+}
+
+.price-info {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Убираем фокус с кнопок */
+button:focus {
+    outline: none;
+    box-shadow: none;
+}
+/* Стили для кнопки изменения или удаления поста */
+    .admin-btn-transparent {
+        display: inline-block;
+        padding: 4px 8px;
+        margin-left: 8px;
+        color: #fff;
+        background-color: #f2cc8f;
+        border: none;
+        border-radius: 12px;
+        text-align: center;
+        font-size: 12px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .admin-btn-transparent:hover {
+        background-color: #e0b98f;
+    }
+
+    .button-container {
+        text-align: right;
+    }
+
+
+
+</style>
+
+    <body>
+
+<main>
+    <section class="hero-section hero-50 d-flex justify-content-center align-items-center" id="section_1">
+        <div class="section-overlay"></div>
+        <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path fill="#3D405B" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z" stroke-width="0"></path>
+            <path fill="#3D405B" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z" stroke-width="0"></path>
+            <path fill="#3D405B" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z" stroke-width="0"></path>
+            <path fill="#3D405B" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z" stroke-width="0"></path>
+            <path fill="#3D405B" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z" stroke-width="0"></path>
+            <path fill="#3D405B" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z" stroke-width="0"></path>
+            <path fill="#3D405B" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z" stroke-width="0"></path>
+        </svg>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <h1 class="text-white mb-4 pb-2">Подробная информация</h1>
+                    <a href="javascript:history.back()" class="btn custom-btn me-3">Назад</a>
+                </div>
+            </div>
+        </div>
+
+        <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path fill="#ffffff" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z" stroke-width="0"></path>
+            <path fill="#ffffff" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z" stroke-width="0"></path>
+            <path fill="#ffffff" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z" stroke-width="0"></path>
+            <path fill="#ffffff" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z" stroke-width="0"></path>
+            <path fill="#ffffff" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z" stroke-width="0"></path>
+            <path fill="#ffffff" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z" stroke-width="0"></path>
+            <path fill="#ffffff" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z" stroke-width="0"></path>
+        </svg>
+    </section>
+
+    <section class="events-section events-detail-section section-padding" id="section_2">
+        <div class="container">
+            <div class="row">
+                <div class="button-container">
+                    {% if request.user.status == 2 or request.user.is_admin %}
+                        <a href="{% url 'event_update' event.slug %}" class="admin-btn-transparent">Изменить мероприятие</a>
+                        <form method="post" action="{% url 'event_delete' event.slug %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="admin-btn-transparent" onclick="return confirm('Вы уверены, что хотите удалить это мероприятие?');">Удалить мероприятие</button>
+                        </form>
+                    {% endif %}
+                </div>
+
+                <div class="col-lg-6 col-md-8 col-12 mx-auto">
+                    <h2 class="mb-lg-5 mb-4">{{ event.title }}</h2>
+
+                    <div class="custom-block-image-wrap">
+                        <img src="{{ event.logo.url }}" class="custom-block-image img-fluid" alt="">
+                    </div>
+
+                    <div class="custom-block-info">
+                        <h3 class="mb-3">Описание</h3>
+                        <p>{{ event.description }}</p>
+
+                        <div class="events-detail-info row my-5">
+                            <div class="col-lg-12 col-12">
+                                <h4 class="mb-3">Основная информация</h4>
+                            </div>
+
+                            <div class="col-lg-4 col-12">
+                                <span class="custom-block-span">Дата:</span>
+                                <p class="mb-0">{{ event.event_date }}</p>
+                            </div>
+
+                            <div class="col-lg-4 col-12 my-3 my-lg-0">
+                                <span class="custom-block-span">Место проведения:</span>
+                                <p class="mb-0">{{ event.location }}</p>
+                            </div>
+
+                            <div class="col-lg-4 col-12">
+                                <span class="custom-block-span">Цена:</span>
+                                <p class="mb-0">{{ event.price|floatformat:0 }} руб.</p>
+                            </div>
+                        </div>
+<br><br><br>
+                        <div class="contact-info">
+                            <div class="contact-info-item">
+                                <div class="contact-info-body">
+                                    <p class="mt-2 mb-1">
+                                        <a href="tel:9103148225" class="contact-link">+7 910-314-82-25</a>
+                                    </p>
+                                    <p class="mb-0">
+                                        <a href="mailto:eventsupport@gmail.com" class="contact-link">eventsupport@gmail.com</a>
+                                    </p>
+                                </div>
+
+                                <div class="contact-info-footer">
+                                    <button type="button" class="btn-open-modal" data-bs-toggle="modal" data-bs-target="#buyTicketModal">
+                                        Купить билет
+                                    </button>
+                                </div>
+                            </div>
+
+                            <img src="" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Модальное окно для покупки билетов -->
+                <div class="modal fade" id="buyTicketModal" tabindex="-1" aria-labelledby="buyTicketModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="buyTicketModalLabel">{{ event.title }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="buyTicketForm" method="POST" action="{% url 'event_detail' event.slug %}">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="ticketCount" class="form-label">Количество билетов</label>
+                                        <input type="number" class="form-control" id="ticketCount" name="quantity" value="1" min="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <p class="price-info">
+                                            Цена за билет: <span id="ticketPrice">{{event.price|floatformat:1}} руб.</span><br>
+                                            Общая стоимость: <span id="totalPrice">{{event.price|floatformat:1}} руб.</span>
+                                        </p>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn-close-modal" data-bs-dismiss="modal">Отмена</button>
+                                <button type="button" class="btn-buy-ticket" id="submitTicketForm">Купить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+    </body>
+        <script>
+    setTimeout(function() {
+        let alertElement = document.querySelector('.alert-custom');
+        if (alertElement) {
+            alertElement.classList.remove('show');
+            alertElement.classList.add('fade');
+            setTimeout(function() {
+                alertElement.remove();
+            }, 500);  // Время на анимацию исчезновения
+        }
+    }, 3000);  // 4 секунды
+
+    // для модального окна покупки
+document.addEventListener('DOMContentLoaded', function () {
+    const ticketCountInput = document.getElementById('ticketCount');
+    const ticketPrice = parseFloat(document.getElementById('ticketPrice').textContent); // Цена за билет
+    const totalPriceElement = document.getElementById('totalPrice');
+    const submitButton = document.getElementById('submitTicketForm');
+
+    // Обновление общей стоимости при изменении количества билетов
+    ticketCountInput.addEventListener('input', function () {
+        const quantity = parseInt(ticketCountInput.value) || 1;
+        const totalPrice = ticketPrice * quantity;
+        totalPriceElement.textContent = totalPrice.toFixed(1) + ' руб.';
+    });
+
+    // Обработка отправки формы при нажатии кнопки "Купить"
+    submitButton.addEventListener('click', function () {
+        document.getElementById('buyTicketForm').submit();
+    });
+});
+
+</script>
+
+{% endblock %}
+

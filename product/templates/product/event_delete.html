@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br><br><br><br><br>
+<div class="container mt-4">
+    <h2>Удалить мероприятие</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>Вы уверены, что хотите удалить мероприятие "{{ event.title }}"?</p>
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a href="{% url 'event_detail' event.slug %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

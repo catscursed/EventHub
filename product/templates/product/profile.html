@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<body>
+    <style>
+        /* Параметры для фото профиля */
+        .custom-block-image {
+            width: 100%;
+            height: auto;
+            max-width: 150px;  /* Максимальная ширина */
+            max-height: 150px; /* Максимальная высота */
+            min-width: 100px;  /* Минимальная ширина */
+            min-height: 100px; /* Минимальная высота */
+            object-fit: cover; /* Изображение сохраняет свои пропорции и заполняет контейнер */
+            border-radius: 50%; /* Скругленные углы для создания эффекта круга */
+        }
+
+        .custom-block-image-wrap {
+            display: flex;
+            justify-content: center; /* Центрирование изображения по горизонтали */
+            align-items: center;     /* Центрирование изображения по вертикали */
+            overflow: hidden;        /* Обрезка изображения, если оно выходит за пределы контейнера */
+            border: 2px solid #ccc;  /* Обрамление изображения */
+            border-radius: 50%;      /* Делаем контейнер кругом */
+            width: 150px;            /* Фиксированная ширина контейнера */
+            height: 150px;           /* Фиксированная высота контейнера */
+            margin: auto;            /* Центрирование контейнера */
+        }
+
+        .custom-block-info {
+            text-align: center; /* Центрирование текста */
+        }
+
+        .events-section {
+            display: flex;
+            justify-content: center; /* Центрирование по горизонтали */
+            align-items: center;     /* Центрирование по вертикали */
+            flex-direction: column;  /* Элементы размещены в колонку */
+        }
+
+        /* Стиль для кнопки "На главную" */
+        .back-to-home {
+            position: absolute;
+            top: 20px;        /* Отступ сверху */
+            right: 20px;      /* Отступ справа */
+            background-color: #f2cc8f; /* Цвет кнопки */
+            color: #fff;      /* Цвет текста */
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-to-home:hover {
+            background-color: #e6b57d; /* Цвет кнопки при наведении */
+        }
+
+        /* Стиль для модалки */
+        .modal-content {
+            padding: 20px;
+        }
+
+        .modal-header {
+            border-bottom: none;
+        }
+
+        .modal-footer {
+            border-top: none;
+        }
+
+        .modal-dialog {
+            max-width: 500px;
+        }
+    </style>
+
+<section class="hero-section hero-50 d-flex justify-content-center align-items-center" id="section_1"
+         xmlns="http://www.w3.org/1999/html">
+
+                <div class="section-overlay"></div>
+
+                <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="#3D405B" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z" stroke-width="0"></path> <path fill="#3D405B" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z" stroke-width="0"></path> <path fill="#3D405B" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z" stroke-width="0"></path><path fill="#3D405B" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z" stroke-width="0"></path><path fill="#3D405B" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z" stroke-width="0"></path><path fill="#3D405B" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z" stroke-width="0"></path><path fill="#3D405B" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z" stroke-width="0"></path></svg>
+
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-6 col-12">
+                            <h2 class="text-white mb-4 pb-2">Личный кабинет</h2>
+
+                            <a href="{% url 'index' %}" class="btn custom-btn smoothscroll me-3">На главную</a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="#ffffff" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z" stroke-width="0"></path> <path fill="#ffffff" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z" stroke-width="0"></path> <path fill="#ffffff" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z" stroke-width="0"></path><path fill="#ffffff" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z" stroke-width="0"></path><path fill="#ffffff" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z" stroke-width="0"></path><path fill="#ffffff" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z" stroke-width="0"></path><path fill="#ffffff" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z" stroke-width="0"></path></svg>
+            </section>
+
+
+
+    <main>
+        <section class="events-section section-padding" id="section_2">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-12 mb-5 mb-lg-0">
+                        <div class="custom-block-image-wrap">
+                                <img src="{% if user.cover %}{{ user.cover.url }}{% else %}{% static 'images/default_profile_photo/no_photo.jpg' %}{% endif %}" class="custom-block-image img-fluid" alt="Фото профиля пользователя">
+
+                            </a>
+                        </div>
+
+                        <div class="custom-block-info">
+                            <a href="event-detail.html" class="events-title mb-2">{{ user.full_name }}</a>
+                            <p class="mb-0">{{ user.email }}</p>
+
+                            <div class="border-top mt-4 pt-3">
+                                <div class="d-flex flex-wrap align-items-center justify-content-center mb-1">
+                                    <span class="custom-block-span">Номер телефона:</span>
+                                    <p class="mb-0">{{ user.phone_number }}</p>
+                                </div>
+
+                                <div class="d-flex flex-wrap align-items-center justify-content-center">
+                                    <span class="custom-block-span">Баланс:</span>
+                                    <p class="mb-0">{{ user.wallet }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+<!-- Кнопка для открытия модалки "мои билеты" -->
+                     <div class="text-center">
+                        <button type="button" class="btn btn-warning mt-3" data-bs-toggle="modal" data-bs-target="#myTicketsModal">
+                            Мои билеты
+                        </button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<!-- Модалка для отображения билетов -->
+<div class="modal fade" id="myTicketsModal" tabindex="-1" aria-labelledby="myTicketsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myTicketsModalLabel">Мои билеты</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if request.session.tickets %}
+                    {% for ticket in request.session.tickets %}
+                        <div class="d-flex align-items-start mb-3 p-3" style="border-bottom: 1px solid #dee2e6;">
+                            <!-- Отображение фото события -->
+                            <img src="{{ ticket.logo_url }}" alt="Фото события" class="me-3" style="width: 80px; height: 80px; object-fit: cover;">
+
+                            <!-- Информация о билете -->
+                            <div style="flex-grow: 1;">
+                                <h6 class="mb-1">{{ticket.title}}</h6>
+                                <p class="mb-1"><strong>Дата проведения:</strong> {{ ticket.event_date }}</p>
+                                <p class="mb-1"><strong>Место проведения:</strong> {{ticket.location}}</p>
+                                <p class="text-muted"><small>Код билета: {{ticket.ticket_code}}</small></p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>У вас нет билетов.</p>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <!-- Подключение Bootstrap JavaScript -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+{% endblock %}

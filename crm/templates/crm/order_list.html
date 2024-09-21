@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<style>
+body {
+  font-size: 140%;
+}
+
+h2 {
+  text-align: center;
+  padding: 20px 0;
+}
+
+table caption {
+	padding: .5em 0;
+}
+
+table.dataTable th,
+table.dataTable td {
+  white-space: nowrap;
+}
+
+.p {
+  text-align: center;
+  padding-top: 140px;
+  font-size: 14px;
+}
+</style>
+
+
+<section class="hero-section hero-50 d-flex justify-content-center align-items-center" id="section_1"
+         xmlns="http://www.w3.org/1999/html">
+
+                <div class="section-overlay"></div>
+
+                <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="#3D405B" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z" stroke-width="0"></path> <path fill="#3D405B" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z" stroke-width="0"></path> <path fill="#3D405B" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z" stroke-width="0"></path><path fill="#3D405B" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z" stroke-width="0"></path><path fill="#3D405B" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z" stroke-width="0"></path><path fill="#3D405B" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z" stroke-width="0"></path><path fill="#3D405B" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z" stroke-width="0"></path></svg>
+
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-6 col-12">
+<!-Поисковик мероприятий-->
+                            <h2 class="text-white mb-4 pb-2">Список покупок</h2>
+
+
+                            <a href="{% url 'index' %}" class="btn custom-btn smoothscroll me-3">На главную</a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="#ffffff" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z" stroke-width="0"></path> <path fill="#ffffff" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z" stroke-width="0"></path> <path fill="#ffffff" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z" stroke-width="0"></path><path fill="#ffffff" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z" stroke-width="0"></path><path fill="#ffffff" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z" stroke-width="0"></path><path fill="#ffffff" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z" stroke-width="0"></path><path fill="#ffffff" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z" stroke-width="0"></path></svg>
+            </section>
+
+
+
+<br><br><br><br><br>
+
+<!-таблица crm начало-->
+
+<h2>CRM таблица</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <table summary="This table shows how to create responsive tables using Datatables' extended functionality" class="table table-bordered table-hover dt-responsive">
+        <thead>
+          <tr>
+            <th>Покупатель</th>
+            <th>Мероприятие</th>
+            <th>Кол-во</th>
+            <th>Итоговая цена</th>
+            <th>Дата покупки</th>
+            <th>Статус покупки</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+              <tr>
+                <td>{{ order.user }}</td>
+                <td>{{ order.event }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.total_price }}</td>
+                <td>{{ order.created_date }}</td>
+                <td>{{ order.get_status_display }}</td>
+
+              </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<h2>Итоговая прибыль {{income}} руб.</h2>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!-таблица crm конец-->
+
+
+
+                    </div>
+                </div>
+            </section>
+
+
+<script>
+$('table').DataTable();
+
+// See:
+// http://www.sitepoint.com/responsive-data-tables-comprehensive-list-solutions
+</script>
+{% endblock %}

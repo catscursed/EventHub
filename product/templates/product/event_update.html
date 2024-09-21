@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero-section hero-50 d-flex justify-content-center align-items-center" id="section_1" xmlns="http://www.w3.org/1999/html">
+    <div class="section-overlay"></div>
+    <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path fill="#3D405B" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z" stroke-width="0"></path>
+    </svg>
+    <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path fill="#3D405B" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z" stroke-width="0"></path>
+        <path fill="#3D405B" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z" stroke-width="0"></path>
+    </svg>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <h2 class="text-white mb-4 pb-2">Изменить мероприятие</h2>
+                <a href="{% url 'index' %}" class="btn custom-btn smoothscroll me-3">На главную</a>
+            </div>
+        </div>
+    </div>
+
+    <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path fill="#ffffff" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z" stroke-width="0"></path>
+        <path fill="#ffffff" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z" stroke-width="0"></path>
+        <path fill="#ffffff" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z" stroke-width="0"></path>
+        <path fill="#ffffff" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z" stroke-width="0"></path>
+        <path fill="#ffffff" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z" stroke-width="0"></path>
+        <path fill="#ffffff" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z" stroke-width="0"></path>
+        <path fill="#ffffff" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z" stroke-width="0"></path>
+    </svg>
+</section>
+
+<div class="container mt-4">
+    <h2>Изменить мероприятие</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Название</label>
+            <input type="text" id="title" name="title" class="form-control" value="{{ event.title }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Описание</label>
+            <textarea id="description" name="description" class="form-control" rows="3">{{ event.description }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="location" class="form-label">Место проведения</label>
+            <input type="text" id="location" name="location" class="form-control" value="{{ event.location }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="price" class="form-label">Цена билета</label>
+            <input type="number" id="price" name="price" class="form-control" value="{{ event.price }}" step="0.01" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="available" class="form-label">Количество доступных билетов</label>
+            <input type="number" id="available" name="available" class="form-control" value="{{ event.available }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="duration" class="form-label">Продолжительность</label>
+            <input type="text" id="duration" name="duration" class="form-control" value="{{ event.duration }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="logo" class="form-label">Логотип</label>
+            <input type="file" id="logo" name="logo" class="form-control">
+            {% if event.logo %}
+                <img src="{{ event.logo.url }}" alt="Логотип" class="mt-2" style="max-width: 150px;">
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+        <a href="{% url 'event_detail' event.slug %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}
