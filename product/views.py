@@ -36,7 +36,7 @@ def index_view(request):
     return render(request, 'product/index.html', {'events': events})
 
 
-
+@login_required(login_url='register')
 def event_detail_view(request, slug):
     """
     Детальная страница мероприятия.
@@ -110,7 +110,7 @@ def event_list_view(request):
     })
 
 
-@login_required
+@login_required(login_url='register')
 def event_create_view(request):
     """
     Страница создания мероприятий (доступна и видна только менеджеру)
@@ -156,7 +156,7 @@ def event_create_view(request):
 
 
 
-@login_required
+@login_required(login_url='register')
 @manager_required
 def event_update_view(request, slug):
     """
@@ -179,7 +179,7 @@ def event_update_view(request, slug):
     return render(request, 'product/event_update.html', {'event': event})
 
 
-@login_required
+@login_required(login_url='register')
 @manager_required
 def event_delete_view(request, slug):
     """
