@@ -36,7 +36,7 @@ def index_view(request):
     return render(request, 'product/index.html', {'events': events})
 
 
-@login_required
+
 def event_detail_view(request, slug):
     """
     Детальная страница мероприятия.
