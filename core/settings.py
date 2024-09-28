@@ -69,16 +69,25 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),  # Имя базы данных
-        'USER': os.getenv('DB_USER'),  # Имя пользователя
-        'PASSWORD': os.getenv('DB_PASSWORD'),  # Пароль
-        'HOST': os.getenv('DB_HOST'),  # Хост
-        'PORT': os.getenv('DB_PORT'),  # Порт
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+#Закомментировано для работы сайта на общем сервере, там бесплатный сервер и не поддерживается psql,
+#Приходится использовать SQLite
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DB_NAME'),  # Имя базы данных
+#         'USER': os.getenv('DB_USER'),  # Имя пользователя
+#         'PASSWORD': os.getenv('DB_PASSWORD'),  # Пароль
+#         'HOST': os.getenv('DB_HOST'),  # Хост
+#         'PORT': os.getenv('DB_PORT'),  # Порт
+#     }
+# }
 
 AUTH_USER_MODEL = 'user.MyUser'
 
